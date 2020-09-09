@@ -28,3 +28,21 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Repository\StarWarsCharacterRepository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - App\Entity\StarWarsCharacter
+
+    App\Repository\EpisodeRepository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - App\Entity\Episode
+
+    App\Service\ParsedResultsProvider:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $serializer: '@jms_serializer'
